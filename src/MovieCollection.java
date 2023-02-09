@@ -98,7 +98,7 @@ public class MovieCollection
             String movieTitle = movies.get(i).getTitle();
             movieTitle = movieTitle.toLowerCase();
 
-            if (movieTitle.indexOf(searchTerm) != -1)
+            if (movieTitle.contains(searchTerm))
             {
                 //add the Movie objest to the results list
                 results.add(movies.get(i));
@@ -181,7 +181,7 @@ public class MovieCollection
             String cast = movies.get(i).getCast();
             cast = cast.toLowerCase();
 
-            if (cast.indexOf(searchTerm) != -1)
+            if (cast.contains(searchTerm))
             {
                 //add the Movie objest to the results list
                 results.add(movies.get(i));
@@ -278,7 +278,7 @@ public class MovieCollection
             String keyword = movies.get(i).getKeywords();
             keyword = keyword.toLowerCase();
 
-            if (keyword.indexOf(searchTerm) != -1)
+            if (keyword.contains(searchTerm))
             {
                 //add the Movie objest to the results list
                 results.add(movies.get(i));
@@ -316,7 +316,85 @@ public class MovieCollection
     private void listGenres()
     {
 
+        // arraylist to hold search results
+        ArrayList<Movie> results = new ArrayList<Movie>();
+        ArrayList<Movie> newResults = new ArrayList<Movie>();
+        ArrayList<String> list = new ArrayList<String>();
+        // search through ALL movies in collection
+        for (int i = 0; i < movies.size(); i++)
+        {
+            String movieTitle = movies.get(i).getTitle();
+            movieTitle = movieTitle.toLowerCase();
+            //add the Movie objest to the results list
+            results.add(movies.get(i));
+            list.add(movies.get(i).getGenres());
+        }
+        sortResults(results);
+
+        int index=0;
+        // now, display them all to the user
+        ArrayList<String> secondList = new ArrayList<String>();
+        for (int i = 0; i < results.size(); i++)
+        {
+            String actors = results.get(i).getGenres();
+            String[] actor = actors.split("\\|");
+
+            for (String s : actor) {
+                if (!secondList.contains(s)) {
+                    secondList.add(s);
+                }
+            }
+
+            // this will print index 0 as choice 1 in the results list; better for user!
+
+        }
+        int choiceNum = index + 1;
+        while(index<secondList.size()) {
+            System.out.println("" + choiceNum + ". " + secondList.get(index));
+            index = index + 1;
+            choiceNum++;
+        }
+        System.out.println("Which genre would you like to learn more about?");
+        System.out.print("Enter number: ");
+        int choice = scanner.nextInt()-1;
+        scanner.nextLine();
+        for (int i = 0; i < movies.size(); i++)
+        {
+            String movieTitle = movies.get(i).getGenres();
+            String[] movies = movieTitle.split("\\|");
+            movieTitle = movieTitle.toLowerCase();
+            for(String s:movies){
+                if (s.equals(secondList.get(choice)))
+                {
+                    //add the Movie objest to the results list
+                    newResults.add(this.movies.get(i));
+                }
+            }
+
+        }
+        for (int i = 0; i < newResults.size(); i++)
+        {
+            String title = newResults.get(i).getTitle();
+
+            // this will print index 0 as choice 1 in the results list; better for user!
+            int choiceNumber = i + 1;
+
+            System.out.println("" + choiceNumber + ". " + title);
+        }
+        System.out.println("Which movie would you like to learn more about?");
+        System.out.print("Enter number: ");
+
+        int choice2 = scanner.nextInt();
+        scanner.nextLine();
+        Movie selectedMovie = newResults.get(choice2 - 1);
+
+
+        displayMovieInfo(selectedMovie);
+
+        System.out.println("\n ** Press Enter to Return to Main Menu **");
+        scanner.nextLine();
     }
+
 
     private void listHighestRated()
     {
