@@ -398,12 +398,62 @@ public class MovieCollection
 
     private void listHighestRated()
     {
+        ArrayList<Movie> movieResults = new ArrayList<Movie>();
+        movieResults.add(movies.get(0));
+        for (Movie mov : movies)
+        {
+            int i = 0;
+            while (mov.getUserRating() < movieResults.get(i).getUserRating() && i < movieResults.size() - 1)
+            {
+                i++;
+            }
+            movieResults.add(i, mov);
+        }
 
+        // now, display them all to the user
+        for (int i = 0; i < 50; i++)
+        {
+            String title = movieResults.get(i).getTitle();
+            double rate = movieResults.get(i).getUserRating();
+
+            // this will print index 0 as choice 1 in the results list; better for user!
+            int choiceNum = i + 1;
+
+            System.out.println("" + choiceNum + ". " + title + ": " + rate);
+        }
+
+        System.out.println("\n ** Press Enter to Return to Main Menu **");
+        scanner.nextLine();
     }
 
     private void listHighestRevenue()
     {
+        ArrayList<Movie> movieResults = new ArrayList<Movie>();
+        movieResults.add(movies.get(0));
+        for (Movie mov : movies)
+        {
+            int i = 0;
+            while (mov.getRevenue() < movieResults.get(i).getRevenue() && i < movieResults.size() - 1)
+            {
+                i++;
+            }
+            movieResults.add(i, mov);
+        }
 
+        // now, display them all to the user
+        for (int i = 0; i < 50; i++)
+        {
+            String title = movieResults.get(i).getTitle();
+            int revenue = movieResults.get(i).getRevenue();
+
+            // this will print index 0 as choice 1 in the results list; better for user!
+            int choiceNum = i + 1;
+
+            System.out.println("" + choiceNum + ". " + title + ": " + revenue);
+        }
+
+        System.out.println("\n ** Press Enter to Return to Main Menu **");
+        scanner.nextLine();
     }
 
     private void importMovieList(String fileName)
